@@ -1,8 +1,6 @@
 {
-  "private": true,
-  "name": "devvit-webview-react",
-  "version": "0.0.0",
-  "license": "BSD-3-Clause",
+  "name": "Acronyte",
+  "version": "0.1.0",
   "type": "module",
   "scripts": {
     "dev:game": "vite build --watch",

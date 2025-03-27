@@ -1,62 +1,60 @@
-## Devvit Webview React
+# Acronyte
 
-A template repository for writing webview apps with Devvit.
+Acronyte is a dynamic, community-driven application that transforms subreddit identities into daily acronym challenges. By generating an acronym from the subreddit’s name and description, Acronyte invites users to craft their own creative expansions. Upvotes and a real-time leaderboard foster friendly competition, making each day a unique celebration of creativity.
 
-https://github.com/user-attachments/assets/5bf4d6ec-5ff1-49ce-8c50-f46e7fbac781
+## Features
 
-### Tech
+- **Daily Acronym Challenge:** Generate a fresh acronym every day based on the subreddit’s theme.
+- **User-Generated Content:** Submit your own interpretations and vote on your favorites.
+- **Interactive Leaderboard:** Track top submissions in real-time using Redis sorted sets.
+- **Real-Time Updates:** Adaptive polling ensures that comments and submissions are updated efficiently.
+- **Seamless API Integrations:** Utilizes Devvit, Reddit, and Datamuse APIs to deliver a unique, engaging experience.
 
-- [Devvit](https://developers.reddit.com/docs/): Reddit’s Developer Platform that lets you build powerful apps and experiences to enhance the communities you love.
-- [Vite](https://vite.dev/): Advanced build tool for the web
-- [React](https://react.dev/): UI Library for the web
-- [TailwindCSS](https://tailwindcss.com/): Utility first CSS framework
-- [Typescript](https://www.typescriptlang.org/): Strongly typed Javascript superset
-- [Motion](https://motion.dev/): Animation Library
+## Technologies Used
 
-## Getting started
+- **Frontend:** React with Vite for a fast, responsive webview.
+- **Backend:** Node.js for handling server-side operations and API interactions.
+- **Data Management:** Redis for maintaining a live leaderboard.
+- **APIs:**
+  - Devvit API for interactive posts.
+  - Reddit API for community engagement.
+  - Datamuse API for generating creative acronyms.
 
-> Make sure you have Node 22 downloaded on your machine before running!
+## Installation
 
-```sh
-git clone ....
+1. **Clone the Repository:**
 
-cd ...
+   ```bash
+   git clone https://github.com/RahulYavvari/Acronyte
+   cd acronyte
+   ```
 
-npm install
-```
+2. **Install Dependencies:**
 
-Before continuing, make a subreddit on Reddit.com. This will be where you do your own development. Go to Reddit.com, scroll the left side bar down to communities, and click "Create a community."
+   ```bash
+   npm install
+   ```
 
-Next, go to the `package.json` and update see the `dev:devvit` command. Update the command to have you subreddit name.
+3. **Run the Application:**
 
-Finally go to `devvit.yaml` and name your app. It has to be 0-16 characters. Once you have, click save, and run `npm run upload` from the root of the repository.
+   ```bash
+   npm run dev
+   ```
 
-Now all you have to do is run `npm run dev` and navigate to the subreddit.
+## Usage
 
-There is one last gotcha! You need to make a new post before you can see it. You can do so by going to your subreddit, clicking the three dots, and tapping "Make my experience post". After you start developing your all please update the menu item copy (found in `src/main.tsx`).
+- **Daily Challenge:** Visit the app to see today's generated acronym challenge.
+- **Submit Your Entry:** Comment your full form and engage with the community.
+- **Leaderboard:** Check the interactive leaderboard to see top submissions based on upvotes.
 
-## Commands
+## Contributing
 
-- `npm run dev`: Starts a development server where you can develop your application live on Reddit.
-- `npm run upload`: Uploads a new version of your app
-- `npm run vite`: Useful to run just the React app on your machine if you need to style things quickly.
+Contributions are welcome! If you have suggestions, bug fixes, or improvements, please open an issue or submit a pull request.
 
-## Flow of the app
+## License
 
-`main.tsx` is the main entry point of the application, it will have a launch button that actually launches the webview (stuff in `game/`).
+This project is licensed under the MIT License. See the LICENSE file for details.
 
-In our case we are using webviews so we basically have a totally different application which then outputs to an `index.html` file which is rendered in the webview.
+## Contact
 
-- `Preview.tsx`: It is the loading state till game launches
-- `core/` : Contains api functions
-- `utils/`: Has functions to call APIs and other utilities
-- `constants.ts`: It is the env file for devvit
-- `assets/`: Public folder for static assets
-
-### Inside Actual Game
-
-Entry point is `main.tsx`, which renders App like Vite does, INIT_RESPONSE is called from within an useEffect to send a ready message to the Devvit app.
-
-- `HomePage.tsx` shows an example of routing and navigation with the `useSetPage` hook.
-- `PokemonPage.tsx` shows an example of how to send network requests over postMessage.
-- `/components` for reusable components
+For any questions or feedback, please contact [rahulyavvari@outlook.com].
