@@ -34,8 +34,10 @@ Devvit.addTrigger({
   events: ['AppUpgrade', 'AppInstall'],
   onEvent: async (_, context) => {
     try {
-      let jobId = (await context.redis.get('jobId')) || '0';
-      await context.scheduler.cancelJob(jobId);
+      let jobId = (await context.redis.get('jobId'));
+      if(jobId) {
+        await context.scheduler.cancelJob(jobId);
+      }
       // const jobs = await context.scheduler.listJobs();
       // jobs.forEach(async job => {
       //   await context.scheduler.cancelJob(job.id);
@@ -61,11 +63,26 @@ Devvit.addTrigger({
     try {
       const subredditName = await context.subredditName || "";
       const subredditInfo = await context.reddit.getSubredditInfoByName(subredditName);
-      const producer = await AcronymProducer.create(subredditInfo?.name ?? "Reddit", subredditInfo.description?.markdown ?? "");
+      console.log(subredditInfo)
+      let producer = await AcronymProducer.create(subredditInfo?.name ?? "Reddit", subredditInfo.description?.markdown ?? "");
       let acronyms: any = {};
+      let flag = false;
       for (let i = 0; i < 100; i++) {
         const strIdx = i.toString();
-        acronyms[strIdx] = await producer.getNextWord();
+        const newWord = await producer.getNextWord();
+        if(newWord) {
+          acronyms[strIdx] = newWord;
+        } else {
+          flag = true;
+          break;
+        }
+      }
+      if(flag) {
+        producer = await AcronymProducer.create("Reddit", "");
+        for (let i = 0; i < 100; i++) {
+          const strIdx = i.toString();
+          acronyms[strIdx] = await producer.getNextWord();
+        }
       }
       await context.redis.del('acronyms');
       await context.redis.hSet('acronyms', acronyms);
@@ -191,16 +208,21 @@ Devvit.addCustomPostType({
     });
 
     return (
-      <vstack height="100%" width="100%" alignment="center middle">
-        <button
-          onPress={() => {
-            webview.mount();
-          }}
-        >
-          Launch
-        </button>
+      <vstack height="100%" width="100%"  padding="small" alignment="middle center">
+        <vstack padding="small" cornerRadius="medium" alignment="middle center" >
+              <text color="#1870f4" weight="bold" size="xxlarge"  >A.C.R.O.N.Y.T.E</text>
+              <spacer size="large" />
+              <text weight="bold" size="large">Comment the full form of the acronym to play!</text>
+              <spacer size="medium"/>
+              <text>See a cool acronym? Smash that upvote!</text>
+              <text>Your acronym got the most karma? You win!!</text>
+              <spacer size="medium"/>
+
+              <button onPress={() => webview.mount()} appearance="primary">See what's up</button>
+        </vstack>
       </vstack>
     );
+    
   },
 });
 
