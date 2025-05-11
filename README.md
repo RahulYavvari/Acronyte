@@ -1,4 +1,7 @@
+
 # Acronyte
+
+Check out the project on [Devpost](https://devpost.com/software/acronyte) and watch the [demo video](https://youtu.be/8f1pvYd-dZg).
 
 Acronyte is a dynamic, community-driven application that transforms subreddit identities into daily acronym challenges. By generating an acronym from the subreddit’s name and description, Acronyte invites users to craft their own creative expansions. Upvotes and a real-time leaderboard foster friendly competition, making each day a unique celebration of creativity.
 
